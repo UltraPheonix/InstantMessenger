@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="instantmessengerzaga.instantmessenger.MessengerController" xmlns:fx="http://javafx.com/fxml"
+      prefHeight="700.0" prefWidth="500.0">
+    <TextArea fx:id="messageArea" editable="false" minWidth="200" minHeight="600"/>
+    <HBox>
+        <TextField fx:id="textField" minWidth="100"/>
+        <Button fx:id="sendButton" text="Send" onAction="#sendMessage" />
+    </HBox>
+</VBox>
