@@ -1,5 +1,6 @@
 package instantmessengerzaga.instantmessenger;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -28,8 +29,8 @@ public class MessengerController{
         textField.clear();
     }
 
-    public void addText(String s){
-        messageArea.appendText("\r\n" + s);
+    public void addText(String s) {
+        Platform.runLater(() -> messageArea.appendText("\r\n" + s));
     }
 
 }

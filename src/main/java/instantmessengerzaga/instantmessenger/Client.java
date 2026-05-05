@@ -7,71 +7,56 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Client{
+public class Client {
 
-    private Socket socket;
+    private final DataOutputStream outputStream;
 
-    private DataOutputStream outputStream;
-
-    public Client(String IP, int port, MessengerController messengerController){
+    public Client(String ip, int port, MessengerController messengerController) {
         try {
-            this.socket = new Socket(IP, port);
-            this.socket.setReuseAddress(true);
+            var socket = new Socket(ip, port);
+            socket.setReuseAddress(true);
             this.outputStream = new DataOutputStream(socket.getOutputStream());
 
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    for (String s: MessengerServer.MasterMessageLog) {
-                        messengerController.addText(s);
-                    }
+            Platform.runLater(() -> {
+                for (String s : MessengerServer.MasterMessageLog) {
+                    messengerController.addText(s);
                 }
             });
 
-            ClientProcessor clientProcessor = new ClientProcessor(socket,IP, port, messengerController);
-            clientProcessor.start();
+            Thread.ofVirtual().start(new ClientProcessor(socket, messengerController));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to connect to server", e);
         }
     }
 
-    public void sendMessage(String s){
+    public void sendMessage(String s) {
         try {
             outputStream.writeUTF(s);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Send error: " + e.getMessage());
         }
     }
 }
 
-class ClientProcessor extends Thread{
-    private DataInputStream inputStream;
+class ClientProcessor implements Runnable {
 
-    private MessengerController messengerController;
+    private final DataInputStream inputStream;
+    private final MessengerController messengerController;
 
-    public ClientProcessor(Socket socket, String IP, int port, MessengerController messengerController){
-        try {
-            this.inputStream = new DataInputStream(socket.getInputStream());
-            this.messengerController = messengerController;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    ClientProcessor(Socket socket, MessengerController messengerController) throws IOException {
+        this.inputStream = new DataInputStream(socket.getInputStream());
+        this.messengerController = messengerController;
     }
-
 
     @Override
     public void run() {
-        while (true){
-            try {
-                if(inputStream.available() > 0){
-                    System.out.println("looping");
-                    String s = inputStream.readUTF();
-                    System.out.println(s);
-                    messengerController.addText(s);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            while (true) {
+                String s = inputStream.readUTF();
+                messengerController.addText(s);
             }
+        } catch (IOException e) {
+            System.err.println("Connection closed: " + e.getMessage());
         }
     }
 }

@@ -29,7 +29,7 @@ public class MessengerApplication extends Application {
 
     public void login() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/instantmessengerzaga/instantmessenger//MessageWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/instantmessengerzaga/instantmessenger/MessageWindow.fxml"));
 
         Parent root  = loader.load();
 
