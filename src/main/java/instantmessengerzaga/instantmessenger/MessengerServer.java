@@ -10,20 +10,48 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MessengerServer {
 
+    public interface Listener {
+        void onClientConnected(String username);
+        void onClientDisconnected(String username);
+        void onMessageLogged(String message);
+    }
+
     public static final List<String> MasterMessageLog = new CopyOnWriteArrayList<>();
 
     private final List<ClientSession> sessions = new CopyOnWriteArrayList<>();
+    private ServerSocket serverSocket;
+    private volatile boolean running;
+    private Listener listener;
 
-    public MessengerServer(int port) {
-        try (var serverSocket = new ServerSocket(port)) {
-            serverSocket.setReuseAddress(true);
-            System.out.println("Server started on port " + port);
-            while (true) {
-                var socket = serverSocket.accept();
-                Thread.ofVirtual().start(() -> handleClient(socket));
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public void start(int port) throws IOException {
+        MasterMessageLog.clear();
+        serverSocket = new ServerSocket(port);
+        serverSocket.setReuseAddress(true);
+        running = true;
+        Thread.ofVirtual().start(this::acceptLoop);
+    }
+
+    public void stop() {
+        running = false;
+        try {
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                serverSocket.close();
             }
-        } catch (IOException e) {
-            System.err.println("Server error: " + e.getMessage());
+        } catch (IOException ignored) {}
+    }
+
+    private void acceptLoop() {
+        while (running) {
+            try {
+                var clientSocket = serverSocket.accept();
+                Thread.ofVirtual().start(() -> handleClient(clientSocket));
+            } catch (IOException e) {
+                if (running) System.err.println("Accept error: " + e.getMessage());
+            }
         }
     }
 
@@ -35,6 +63,7 @@ public class MessengerServer {
             String username = in.readUTF();
             session = new ClientSession(socket, username, out);
             sessions.add(session);
+            if (listener != null) listener.onClientConnected(username);
             for (String msg : MasterMessageLog) {
                 out.writeUTF(msg);
             }
@@ -42,6 +71,7 @@ public class MessengerServer {
                 String raw = in.readUTF();
                 String message = username + ": " + raw;
                 MasterMessageLog.add(message);
+                if (listener != null) listener.onMessageLogged(message);
                 broadcast(message);
             }
         } catch (IOException e) {
@@ -49,6 +79,7 @@ public class MessengerServer {
         } finally {
             if (session != null) {
                 sessions.remove(session);
+                if (listener != null) listener.onClientDisconnected(session.username());
             }
         }
     }
@@ -69,8 +100,20 @@ public class MessengerServer {
     }
 
     public static void main(String[] args) {
-        new MessengerServer(5065);
+        var server = new MessengerServer();
+        try {
+            server.start(5065);
+            System.out.println("Server started on port 5065. Press Ctrl+C to stop.");
+            Thread.currentThread().join();
+        } catch (IOException e) {
+            System.err.println("Failed to start server: " + e.getMessage());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            server.stop();
+        }
     }
 }
 
 record ClientSession(Socket socket, String username, DataOutputStream out) {}
+

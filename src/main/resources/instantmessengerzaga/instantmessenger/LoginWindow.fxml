@@ -1,20 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="instantmessengerzaga.instantmessenger.LoginController"
-      prefHeight="400.0" prefWidth="600.0">
+      alignment="CENTER"
+      spacing="0"
+      prefWidth="440" prefHeight="500">
 
-	<HBox>
-        <TextField fx:id="IPField" text="IPField"/>
-        <Button text="Get LocalHost" onAction="#getLocalHost"/>
-	</HBox>
-	<TextField fx:id="PortField" text="PortField"/>
-	<TextField fx:id="usernameField" text="Username"/>
-    <Button fx:id="loginButton" text="Login" onAction="#loginEvent"/>
+    <Region VBox.vgrow="ALWAYS"/>
 
+    <!-- Login card -->
+    <VBox styleClass="welcome-card" spacing="8" maxWidth="360">
+
+        <Label text="Join a Chat" styleClass="app-title"/>
+        <Label text="Connect to a running server" styleClass="subtitle"/>
+
+        <Region prefHeight="12"/>
+
+        <!-- Server IP -->
+        <Label text="SERVER IP" styleClass="field-label"/>
+        <HBox spacing="8">
+            <TextField fx:id="IPField"
+                       promptText="e.g. 192.168.1.10"
+                       styleClass="input-field"
+                       HBox.hgrow="ALWAYS"/>
+            <Button text="My IP" onAction="#getLocalHost" styleClass="secondary-button"/>
+        </HBox>
+
+        <!-- Port -->
+        <Label text="PORT" styleClass="field-label"/>
+        <TextField fx:id="PortField"
+                   promptText="5065"
+                   styleClass="input-field"
+                   maxWidth="Infinity"/>
+
+        <!-- Username -->
+        <Label text="USERNAME" styleClass="field-label"/>
+        <TextField fx:id="usernameField"
+                   promptText="Enter your name"
+                   styleClass="input-field"
+                   maxWidth="Infinity"/>
+
+        <!-- Error message -->
+        <Label fx:id="errorLabel" styleClass="error-label" maxWidth="Infinity" wrapText="true"/>
+
+        <Region prefHeight="8"/>
+
+        <Button text="Connect"
+                onAction="#loginEvent"
+                styleClass="primary-button"
+                maxWidth="Infinity"/>
+
+        <Button text="Back"
+                onAction="#goBack"
+                styleClass="secondary-button"
+                maxWidth="Infinity"/>
+    </VBox>
+
+    <Region VBox.vgrow="ALWAYS"/>
 
 </VBox>
+
