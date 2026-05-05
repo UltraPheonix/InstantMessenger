@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="instantmessengerzaga.instantmessenger.ServerController"
+      prefWidth="680" prefHeight="580">
+
+    <!-- Header bar -->
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="12">
+        <Label text="Server Management" styleClass="header-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="statusLabel" text="Stopped" styleClass="header-sub"/>
+    </HBox>
+
+    <!-- Config row -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <padding><Insets top="14" bottom="10" left="16" right="16"/></padding>
+        <Label text="PORT" styleClass="field-label"/>
+        <TextField fx:id="portField"
+                   text="5065"
+                   prefWidth="90"
+                   styleClass="input-field"/>
+        <Button fx:id="startStopButton"
+                text="Start Server"
+                onAction="#toggleServer"
+                styleClass="primary-button"/>
+    </HBox>
+
+    <!-- Body: users list + message log side by side -->
+    <HBox spacing="12" VBox.vgrow="ALWAYS">
+        <padding><Insets bottom="10" left="16" right="16"/></padding>
+
+        <!-- Connected users -->
+        <VBox spacing="4" prefWidth="170" minWidth="140">
+            <Label text="Connected Users" styleClass="section-title"/>
+            <ListView fx:id="userList" styleClass="user-list" VBox.vgrow="ALWAYS"/>
+        </VBox>
+
+        <!-- Message log -->
+        <VBox spacing="4" HBox.hgrow="ALWAYS">
+            <Label text="Message Log" styleClass="section-title"/>
+            <TextArea fx:id="logArea"
+                      editable="false"
+                      wrapText="true"
+                      styleClass="message-area"
+                      VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </HBox>
+
+    <!-- Footer -->
+    <HBox>
+        <padding><Insets bottom="14" left="16" right="16"/></padding>
+        <Button text="Back to Menu"
+                onAction="#goBack"
+                styleClass="secondary-button"/>
+    </HBox>
+
+</VBox>

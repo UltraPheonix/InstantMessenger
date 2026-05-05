@@ -1,0 +1,198 @@
+/* =========================================================
+   InstantMessenger – Modern flat theme
+   Primary: #1a73e8  Background: #f0f2f5  Error: #d93025
+   ========================================================= */
+
+/* ---------- Root / Background ---------- */
+.root {
+    -fx-background-color: #f0f2f5;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* ---------- Typography ---------- */
+.app-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a73e8;
+}
+
+.subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #5f6368;
+}
+
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5f6368;
+}
+
+.section-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #202124;
+    -fx-padding: 0 0 4 0;
+}
+
+.error-label {
+    -fx-text-fill: #d93025;
+    -fx-font-size: 12px;
+    -fx-padding: 2 0 0 0;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: #1a73e8;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-padding: 10 22 10 22;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1558b0;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #0e3f80;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1a73e8;
+    -fx-border-color: #1a73e8;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 22 10 22;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #e8f0fe;
+}
+
+.danger-button {
+    -fx-background-color: #d93025;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-padding: 10 22 10 22;
+}
+
+.danger-button:hover {
+    -fx-background-color: #b0281f;
+}
+
+.danger-button:pressed {
+    -fx-background-color: #8c1f18;
+}
+
+.big-button {
+    -fx-pref-height: 48px;
+    -fx-font-size: 15px;
+}
+
+/* ---------- Input fields ---------- */
+.input-field {
+    -fx-background-color: white;
+    -fx-border-color: #dadce0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 9 13 9 13;
+    -fx-font-size: 14px;
+}
+
+.input-field:focused {
+    -fx-border-color: #1a73e8;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+/* ---------- Header bar ---------- */
+.header-bar {
+    -fx-background-color: #1a73e8;
+    -fx-padding: 14 16 14 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+.header-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.header-sub {
+    -fx-text-fill: rgba(255,255,255,0.8);
+    -fx-font-size: 12px;
+}
+
+/* ---------- Status indicators ---------- */
+.status-running {
+    -fx-text-fill: #1e8e3e;
+    -fx-font-weight: bold;
+}
+
+.status-stopped {
+    -fx-text-fill: #5f6368;
+    -fx-font-weight: bold;
+}
+
+/* ---------- TextArea (messages / log) ---------- */
+.message-area {
+    -fx-background-color: white;
+    -fx-border-color: #dadce0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+}
+
+.message-area .content {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+}
+
+/* ---------- ListView ---------- */
+.user-list {
+    -fx-background-color: white;
+    -fx-border-color: #dadce0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.user-list .list-cell {
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 13px;
+    -fx-background-color: white;
+}
+
+.user-list .list-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.user-list .list-cell:selected {
+    -fx-background-color: #e8f0fe;
+    -fx-text-fill: #1a73e8;
+}
+
+/* ---------- Input footer row ---------- */
+.input-row {
+    -fx-background-color: white;
+    -fx-border-color: #dadce0 transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 10 12 10 12;
+}
+
+/* ---------- Welcome card ---------- */
+.welcome-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0, 0, 4);
+    -fx-padding: 40 48 40 48;
+}
